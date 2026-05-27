@@ -19,6 +19,7 @@ from .store.db import SessionLocal
 from .store import models
 
 logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 
 def _seed_builtins() -> None:
@@ -41,6 +42,10 @@ def _seed_builtins() -> None:
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
+    import os
+    logger.info(f"🔑 OPENAI_API_KEY present in env: {bool(os.environ.get('OPENAI_API_KEY'))}")
+    logger.info(f"🔑 settings.OPENAI_API_KEY configured: {bool(settings.OPENAI_API_KEY)}")
+    logger.info(f"🌐 CORS_ORIGINS: {settings.CORS_ORIGINS}")
     init_db()
     _seed_builtins()
     paper_scheduler.start()

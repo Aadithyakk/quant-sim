@@ -52,7 +52,7 @@ app = FastAPI(title="Quant Sim", version="0.1.0", lifespan=lifespan)
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=settings.cors_list if settings.cors_list else ["*"],
+    allow_origin_regex=r".*",
     allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
